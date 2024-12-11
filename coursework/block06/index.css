@@ -3,10 +3,11 @@
   }
   
   .Title {
-    background-color: bisque;
+    background-color: rgb(206, 161, 224);
     border: 1px solid;
     height: 40px;
     width: 370px;
+    align-items: center;
   }
   
   .OuterContainer {
@@ -16,15 +17,16 @@
   }
   
   .InnerContainer {
-    background-color: lightgrey;
+    background-color: rgb(141, 207, 243);
     margin-top: 5px;
     margin-bottom: 20px;
     height: 150px;
-    width: 175px;
-  }
+    width: 175px
+    
+  }: 
   
   h1 {
-    color: aqua;
+    color: black;
     text-align: center;
   }
   
@@ -39,8 +41,8 @@
   }
   
   img {
-    height: 150px;
-    width: 175px;
+    height: 220px;
+    width: 280px;
     object-fit: cover;
-    padding: 0 5px;
+    padding: 05px;
   }
