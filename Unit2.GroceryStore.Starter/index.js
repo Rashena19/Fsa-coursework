@@ -15,28 +15,32 @@
  */
 function logNames(items) {
     items.forEach(name => {
-        console.log(item.name)
-
+        console.log(items.name);
     });
-    
+
 }
 
 /**
- * @param {Item[]} items - array of items
- * @returns {string[]} an array of item names in all uppercase
- */
+//  * @param {Item[]} items - array of items
+//  * @returns {string[]} an array of item names in all uppercase
+//  */
 function getUppercaseNames(items) {
-    // TODO: use `map`
+    items.map((item) => {
+        console.log(item.name.toUpperCase());
+    });
 
 }
 
 /**
- * @param {Item[]} items - array of items
- * @param {number} id - id of the item to find
- * @returns {Item} - the item in `items` with the given `id`
- */
+//  * @param {Item[]} items - array of items
+//  * @param {number} id - id of the item to find
+//  * @returns {Item} - the item in `items` with the given `id`
+//  */
 function getItemById(items, id) {
-    // TODO: use `find`
+    //return items.find((item) => item.id === id);
+    let found = items.find((item) => item.id === id);
+    console.log(found["name"]);
+
 }
 
 /**
@@ -45,7 +49,11 @@ function getItemById(items, id) {
  * @returns {number} the price of the item named `name`
  */
 function getItemPriceByName(items, name) {
-    // TODO: use a loop!
+    for (let i = 0; i < items.length; i++) {
+        if (items[i].name === name) {
+            console.log(items[i].price);
+        }
+    }
 }
 
 /**
@@ -54,7 +62,7 @@ function getItemPriceByName(items, name) {
  * @returns {Item[]} array of items that belong to the given `category`
  */
 function getItemsByCategory(items, category) {
-    // TODO: use `filter`
+    return items.filter((item) => item.category === category);
 }
 
 /**
@@ -62,7 +70,7 @@ function getItemsByCategory(items, category) {
  * @returns {number} the total quantity of all items
  */
 function countItems(items) {
-    // TODO: use `reduce`
+    return items.reduce((total, item) => total + item.quantity, 0);
 }
 
 /**
@@ -70,7 +78,10 @@ function countItems(items) {
  * @returns {number} the cost of all given items
  */
 function calculateTotalPrice(items) {
-    // TODO: use `reduce`
+    items.reduce((total, item) => {
+        const itemTotalCost = item.price * item.quantity;
+        return total + itemTotalCost;
+    });
 }
 
 // --------------------- DO NOT CHANGE THE CODE BELOW ------------------------ //

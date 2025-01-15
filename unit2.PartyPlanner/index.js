@@ -7,10 +7,13 @@ const state = {
   events: [],
 };
 
+const form = document.getElementById('partyForm');
+const eventlist = document.getElementById('partyList');
+
 /** Updates state with events from API (pulling events from API) */
 async function getEvent() {
   try {
-    const promise = await fetch(API_URL);
+    const promise = await fetch(BASE_URL);
     const response = await promise.json();
     if (!response.success) {
       throw response.error;
@@ -36,6 +39,7 @@ async function addEvent(newEvent) {
         "Unable to add Event due to Http error: " + response.status
       );
     }
+    render();
   } catch (error) {
     alert(error.message);
   }
@@ -59,7 +63,25 @@ async function deleteEvent(event) {
     alert(error.message);
   }
 }
+form.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  try {
+    const eventDate = new Date(form.eventDate.value).toISOString();
 
+    const newParty = {
+      name: form.eventName.value,
+      description: form.eventDescription.value,
+      date: eventDate,
+      location: form.eventLocation.value,
+    };
+    await createParty(newParty);
+
+    // Clear form inputs
+    // form.reset();
+  } catch (err) {
+    console.log(err);
+  }
+});
 // === Render ===
 
 /** Renders event from state */
@@ -95,6 +117,12 @@ function renderEvent() {
 
     card.append(h1, h2, eventDate, deleteButton);
     return card;
+    // <div>
+    //   <h3>${event.name}</h3>
+    //   <p>${event.description}</p>
+    //   <p>${eventDate}</p>
+    //   <p>${event.location}</p>
+    // </div>
   });
 
   eventList.replaceChildren(...eventCards);
