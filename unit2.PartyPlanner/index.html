@@ -11,7 +11,7 @@
 
 <body>
   <h1>Party Planner</h1>
-  <form id="Party Planner">
+  <form id="partyPlanner">
     <label>
       Event Name
       <input type="text" name="eventName" id="eventName" />
@@ -21,10 +21,14 @@
       <input type="text" name="location" id="location" />
     </label>
     <label>
+      Discription
+      <input type="text" name="discription" id="discription" />
+    </label>
+    <label>
       Date
       <input type="datetime-local" name="date" id="eventDate" />
     </label>
-    <button type="submit" i d="add-event">Add Event</button>
+    <button type="submit" id="add-event">Add Event</button>
   </form>
   <ul id="events"></ul>
 </body>

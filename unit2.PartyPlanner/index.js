@@ -7,27 +7,27 @@ const state = {
   events: [],
 };
 
-const form = document.getElementById('partyForm');
+const form = document.getElementById('partyPlanner');
 const eventlist = document.getElementById('partyList');
 
 /** Updates state with events from API (pulling events from API) */
 async function getEvent() {
   try {
-    const promise = await fetch(BASE_URL);
-    const response = await promise.json();
-    if (!response.success) {
-      throw response.error;
+    const response = await fetch(`${BASE_URL}/events`);
+    const json = await response.json();
+    if (!json.success) {
+      throw json.error;
     }
-    state.artists = response.data;
+    state.events = json.data;
   } catch (error) {
-    alert("Unable to load Events");
+    console.error("Unable to load Events");
   }
 }
 
 /** Asks the API to create a new artist based on the given `Events` */
 async function addEvent(newEvent) {
   try {
-    const response = await fetch(API_URL, {
+    const response = await fetch(`${BASE_URL}/events`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -45,9 +45,9 @@ async function addEvent(newEvent) {
   }
 }
 /** Asks the API to delete the given event */
-async function deleteEvent(event) {
+async function deleteEvent(id) {
   try {
-    const response = await fetch(API_URL + "/" + events.id, {
+    const response = await fetch(`${BASE_URL}/events/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -60,33 +60,38 @@ async function deleteEvent(event) {
     }
     render();
   } catch (error) {
-    alert(error.message);
+    console.log(error.message);
   }
-}
+};
+
+
+// Event Listener
 form.addEventListener('submit', async (event) => {
   event.preventDefault();
   try {
-    const eventDate = new Date(form.eventDate.value).toISOString();
+
+    const eventDate = new Date(form.date.value).toISOString();
 
     const newParty = {
       name: form.eventName.value,
-      description: form.eventDescription.value,
+      description: form.discription.value,
       date: eventDate,
-      location: form.eventLocation.value,
+      location: form.location.value,
     };
-    await createParty(newParty);
 
-    // Clear form inputs
-    // form.reset();
+    await addEvent(newParty);
+
+
+    form.reset();
   } catch (err) {
     console.log(err);
   }
 });
-// === Render ===
+
 
 /** Renders event from state */
 function renderEvent() {
-  const eventList = document.querySelector("events");
+  const eventList = document.querySelector("#events");
 
   if (!state.events.length) {
     eventList.innerHTML = "<li>No events.</li>";
@@ -95,37 +100,32 @@ function renderEvent() {
 
   const eventCards = state.events.map((event) => {
     const card = document.createElement("li");
+
     //H1 for Artist Name
     const h1 = document.createElement("h1");
-    h1.textContent = newEvent.name;
+    h1.textContent = event.name;
 
     //H2 for event Description
     const h2 = document.createElement("h2");
-    h2.textContent = newEvent.description;
+    h2.textContent = event.description;
 
     //h3 Event Date 
-    const eventDate = newDate(event.date).toLocaleString();
+    const eventDate = new Date(event.date).toLocaleString();
 
 
-    //Button to Delete the Artist
+    //Button to Delete the Event
     const deleteButton = document.createElement("button");
     deleteButton.textContent = "Delete";
     deleteButton.style.display = "block";
     deleteButton.addEventListener("click", async () => {
-      await deleteEvent(event);
-    });
-
-    card.append(h1, h2, eventDate, deleteButton);
-    return card;
-    // <div>
-    //   <h3>${event.name}</h3>
-    //   <p>${event.description}</p>
-    //   <p>${eventDate}</p>
-    //   <p>${event.location}</p>
-    // </div>
+      console.log("Delete button clicked!");
+      await deleteEvent(event.id);
+    })
+    card.append(h1, h2, eventDate, deleteButton)
+    return card
   });
-
   eventList.replaceChildren(...eventCards);
+
 }
 /** Syncs state with the API and rerender */
 async function render() {
@@ -133,24 +133,4 @@ async function render() {
   renderEvent();
 }
 
-// === Script ===
-
 render();
-
-// Add listener to form
-const form = document.getElementById("addEvent");
-const eventDate = new Date(form.eventDate.value).toISOString();
-form.addEventListener("submit", async (event) => {
-  event.preventDefault();
-
-
-  const event = {
-    name: form.eventName.value,
-    description: form.description.value,
-    date: eventDate,
-    location: form.location.value
-  };
-
-  await addEvent(event);
-  render();
-});
