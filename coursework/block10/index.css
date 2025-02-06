@@ -1,5 +1,139 @@
-.container {
-    display:flex;
+/* Styles */
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    background: pink;
+    color: white;
 }
 
-body 
+/* Art Container */
+.art-container {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 70vw;
+    height: 60vh;
+    background: rgb(243, 223, 236);
+    overflow: hidden;
+}
+
+/* Circle */
+.circle {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    background: rgb(234, 164, 245);
+    border-radius: 60%;
+    top: 20%;
+    left: 30%;
+    z-index: 2;
+}
+
+/* Rectangle */
+.rectangle {
+    position: absolute;
+    width: 300px;
+    height: 200px;
+    background: rgb(255, 0, 255);
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
+/* Triangle */
+.triangle {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 60px solid transparent;
+    border-right: 60px solid transparent;
+    border-bottom: 100px solid rgba(102, 11, 90, 0.8);
+    bottom: 10%;
+    right: 15%;
+    z-index: 3;
+}
+
+/* Overlay Square */
+.overlay-square {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background: rgba(251, 179, 221, 0.324);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 4;
+}
+
+/* Form Section */
+.ground {
+    margin-top: 20px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-top: 10px;
+}
+
+input {
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: none;
+    font-size: 1rem;
+}
+
+button {
+    margin-top: 15px;
+    padding: 10px;
+    background: orange;
+    color: black;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+button:hover {
+    background: darkorange;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .art-container {
+        width: 90vw;
+        height: 50vh;
+    }
+
+    .circle {
+        width: 100px;
+        height: 100px;
+    }
+
+    .rectangle {
+        width: 180px;
+        height: 90px;
+    }
+
+    .triangle {
+        border-left: 50px solid transparent;
+        border-right: 50px solid transparent;
+        border-bottom: 90px solid rgb(255, 0, 140);
+    }
+}
+
